@@ -1,0 +1,603 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Black Market Bazaar - Underground Cybernetics</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@400;700;900&family=Share+Tech+Mono&display=swap" rel="stylesheet">
+    <script>
+        tailwind.config = {
+            theme: {
+                extend: {
+                    fontFamily: {
+                        'orbitron': ['Orbitron', 'monospace'],
+                        'tech': ['Share Tech Mono', 'monospace']
+                    },
+                    colors: {
+                        'cyber-cyan': '#00ffff',
+                        'cyber-pink': '#ff0080',
+                        'cyber-purple': '#8000ff',
+                        'cyber-yellow': '#ffff00',
+                        'cyber-red': '#ff0040',
+                        'cyber-dark': '#0a0a0a',
+                        'cyber-darker': '#050505'
+                    },
+                    animation: {
+                        'glitch': 'glitch 2s infinite linear alternate-reverse',
+                        'flicker': 'flicker 1.5s infinite linear',
+                        'pulse-neon': 'pulse-neon 2s infinite',
+                        'slide-glitch': 'slide-glitch 0.3s ease-out'
+                    }
+                }
+            }
+        }
+    </script>
+    <style>
+        @keyframes glitch {
+            0%, 100% { transform: translate(0); }
+            10% { transform: translate(-2px, 2px); }
+            20% { transform: translate(-2px, -2px); }
+            30% { transform: translate(2px, 2px); }
+            40% { transform: translate(-2px, -2px); }
+            50% { transform: translate(2px, -2px); }
+            60% { transform: translate(-2px, 2px); }
+            70% { transform: translate(2px, 2px); }
+            80% { transform: translate(-2px, -2px); }
+            90% { transform: translate(2px, 2px); }
+        }
+        
+        @keyframes flicker {
+            0%, 100% { opacity: 1; }
+            50% { opacity: 0.8; }
+        }
+        
+        @keyframes pulse-neon {
+            0%, 100% { 
+                box-shadow: 0 0 5px currentColor, 0 0 10px currentColor, 0 0 15px currentColor;
+            }
+            50% { 
+                box-shadow: 0 0 10px currentColor, 0 0 20px currentColor, 0 0 30px currentColor;
+            }
+        }
+        
+        @keyframes slide-glitch {
+            0% { transform: translateX(-100%); opacity: 0; }
+            100% { transform: translateX(0); opacity: 1; }
+        }
+        
+        .glitch-text::before {
+            content: attr(data-text);
+            position: absolute;
+            left: 2px;
+            text-shadow: -2px 0 #ff0080;
+            top: 0;
+            color: #00ffff;
+            background: transparent;
+            overflow: hidden;
+            clip: rect(0, 900px, 0, 0);
+            animation: glitch-anim 3s infinite linear alternate-reverse;
+        }
+        
+        .glitch-text::after {
+            content: attr(data-text);
+            position: absolute;
+            left: -2px;
+            text-shadow: -2px 0 #00ffff, 2px 2px #ff0080;
+            top: 0;
+            color: transparent;
+            background: transparent;
+            overflow: hidden;
+            clip: rect(0, 900px, 0, 0);
+            animation: glitch-anim2 2s infinite linear alternate-reverse;
+        }
+        
+        @keyframes glitch-anim {
+            0% { clip: rect(64px, 9999px, 66px, 0); }
+            25% { clip: rect(85px, 9999px, 140px, 0); }
+            50% { clip: rect(10px, 9999px, 15px, 0); }
+            75% { clip: rect(40px, 9999px, 80px, 0); }
+            100% { clip: rect(25px, 9999px, 30px, 0); }
+        }
+        
+        @keyframes glitch-anim2 {
+            0% { clip: rect(65px, 9999px, 119px, 0); }
+            25% { clip: rect(52px, 9999px, 74px, 0); }
+            50% { clip: rect(79px, 9999px, 85px, 0); }
+            75% { clip: rect(25px, 9999px, 30px, 0); }
+            100% { clip: rect(95px, 9999px, 100px, 0); }
+        }
+        
+        .scan-lines {
+            position: relative;
+            overflow: hidden;
+        }
+        
+        .scan-lines::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background: linear-gradient(transparent 50%, rgba(0, 255, 255, 0.03) 50%);
+            background-size: 100% 4px;
+            pointer-events: none;
+            animation: scan 0.1s linear infinite;
+        }
+        
+        @keyframes scan {
+            0% { transform: translateY(-100%); }
+            100% { transform: translateY(100vh); }
+        }
+        
+        .product-card:hover {
+            animation: glitch 0.3s ease-in-out;
+        }
+        
+        .neon-border {
+            border: 1px solid #00ffff;
+            box-shadow: 0 0 10px #00ffff;
+        }
+        
+        .neon-border:hover {
+            box-shadow: 0 0 20px #00ffff, inset 0 0 20px rgba(0, 255, 255, 0.1);
+        }
+        
+        .bg-static {
+            background-image: 
+                radial-gradient(circle at 25px 25px, rgba(255,255,255,.1) 2%, transparent 2%),
+                radial-gradient(circle at 75px 75px, rgba(255,255,255,.1) 2%, transparent 2%);
+            background-size: 100px 100px;
+            animation: static 0.5s infinite linear;
+        }
+        
+        @keyframes static {
+            0% { transform: translate(0, 0); }
+            10% { transform: translate(-5%, -5%); }
+            20% { transform: translate(5%, -10%); }
+            30% { transform: translate(-10%, 5%); }
+            40% { transform: translate(10%, -5%); }
+            50% { transform: translate(-5%, 10%); }
+            60% { transform: translate(5%, 5%); }
+            70% { transform: translate(-10%, -10%); }
+            80% { transform: translate(10%, 10%); }
+            90% { transform: translate(-5%, 0%); }
+            100% { transform: translate(5%, -5%); }
+        }
+    </style>
+</head>
+<body class="bg-black text-white font-tech overflow-x-hidden scan-lines">
+    <!-- Animated Background -->
+    <div class="fixed inset-0 bg-static opacity-5 pointer-events-none"></div>
+    
+    <!-- Header -->
+    <header class="relative z-10 border-b border-cyber-cyan/30 bg-cyber-darker/90 backdrop-blur-sm">
+        <div class="container mx-auto px-4 py-6">
+            <h1 class="text-4xl md:text-6xl font-orbitron font-black text-center relative glitch-text animate-flicker" data-text="BLACK MARKET BAZAAR">
+                BLACK MARKET BAZAAR
+            </h1>
+            <p class="text-center text-cyber-cyan mt-2 font-tech tracking-wider">UNDERGROUND CYBERNETICS • NEURAL MODIFICATIONS • MEMORY IMPLANTS</p>
+            <div class="text-center mt-4">
+                <span class="inline-block px-4 py-1 bg-cyber-red/20 border border-cyber-red text-cyber-red text-sm font-tech tracking-wide animate-pulse">
+                    ⚠ ENCRYPTED CONNECTION REQUIRED ⚠
+                </span>
+            </div>
+        </div>
+    </header>
+
+    <!-- Main Product Grid -->
+    <main id="productGrid" class="container mx-auto px-4 py-12">
+        <div class="mb-8 text-center">
+            <h2 class="text-2xl font-orbitron font-bold text-cyber-pink mb-4">NEURAL ENHANCEMENT CATALOG</h2>
+            <div class="flex justify-center items-center gap-4 text-sm text-cyber-cyan">
+                <span>ACTIVE LISTINGS: <span class="text-cyber-yellow">347</span></span>
+                <span>•</span>
+                <span>LAST UPDATE: <span class="text-cyber-yellow">2089.03.15</span></span>
+                <span>•</span>
+                <span>THREAT LEVEL: <span class="text-cyber-red animate-pulse">MAXIMUM</span></span>
+            </div>
+        </div>
+
+        <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-6" id="productsContainer">
+            <!-- Products will be dynamically generated here -->
+        </div>
+    </main>
+
+    <!-- Twist Reveal Section (Initially Hidden) -->
+    <section id="twistReveal" class="hidden fixed inset-0 bg-black z-50 flex items-center justify-center">
+        <div class="max-w-2xl mx-auto p-8 text-center">
+            <div class="animate-slide-glitch">
+                <div class="mb-8">
+                    <h2 class="text-4xl font-orbitron font-black text-cyber-red mb-4 glitch-text" data-text="FINAL LISTING">
+                        FINAL LISTING
+                    </h2>
+                    <div class="text-cyber-cyan font-tech tracking-wider">PRODUCT CLASSIFICATION: HUMAN ASSET</div>
+                </div>
+                
+                <!-- Profile Card -->
+                <div class="bg-cyber-darker border-2 border-cyber-pink neon-border p-6 mb-6">
+                    <div class="mb-6" id="profileImageContainer">
+                        <!-- Dynamic profile image will be inserted here -->
+                    </div>
+                    
+                    <div class="text-left space-y-4">
+                        <div class="flex justify-between items-center">
+                            <span class="text-cyber-cyan font-tech">DESIGNATION:</span>
+                            <span class="text-cyber-yellow font-orbitron font-bold" id="generatedAlias">LOADING...</span>
+                        </div>
+                        <div class="flex justify-between items-center">
+                            <span class="text-cyber-cyan font-tech">MARKET VALUE:</span>
+                            <span class="text-cyber-yellow font-orbitron font-bold" id="generatedPrice">¥ CALCULATING...</span>
+                        </div>
+                        <div class="border-t border-cyber-cyan/30 pt-4">
+                            <div class="text-cyber-cyan font-tech mb-2">BEHAVIORAL ANALYSIS:</div>
+                            <div class="text-white/90 text-sm" id="generatedProfile">Analyzing browsing patterns...</div>
+                        </div>
+                        <div class="border-t border-cyber-cyan/30 pt-4">
+                            <div class="text-cyber-cyan font-tech mb-2">COMPATIBILITY MATRIX:</div>
+                            <div class="grid grid-cols-3 gap-2 text-xs" id="traitsList">
+                                <!-- Traits will be populated here -->
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                
+                <button id="listOnMarketBtn" class="w-full bg-cyber-red/20 border-2 border-cyber-red text-cyber-red py-4 px-8 font-orbitron font-bold text-xl hover:bg-cyber-red/40 transition-all duration-300 animate-pulse-neon">
+                    LIST ON MARKET
+                </button>
+            </div>
+        </div>
+    </section>
+
+    <!-- Final Transaction Section (Initially Hidden) -->
+    <section id="finalTransaction" class="hidden fixed inset-0 bg-black z-50 flex items-center justify-center">
+        <div class="max-w-lg mx-auto p-8 text-center animate-slide-glitch">
+            <div class="mb-8">
+                <h3 class="text-3xl font-orbitron font-black text-cyber-cyan mb-4">TRANSACTION COMPLETE</h3>
+            </div>
+            
+            <div class="bg-cyber-darker border border-cyber-cyan/50 p-6 mb-6">
+                <div class="mb-4">
+                    <div class="text-cyber-cyan font-tech text-sm mb-2">BUYER PROFILE:</div>
+                    <!-- Profile picture of a mysterious buyer -->
+                    <img src="https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?ixlib=rb-4.0.3&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=150&h=150" alt="Mysterious buyer profile" class="w-16 h-16 rounded-full mx-auto mb-2 border border-cyber-cyan">
+                    <div class="text-cyber-yellow font-orbitron font-bold">SHADOWCORP_EXEC_001</div>
+                    <div class="text-cyber-cyan text-sm">BUYER RATING: ★★★★★ (2,847 acquisitions)</div>
+                </div>
+                
+                <div class="border-t border-cyber-cyan/30 pt-4 mb-4">
+                    <div class="text-cyber-cyan font-tech text-sm mb-2">SHIPMENT TRACKING:</div>
+                    <div class="text-cyber-yellow font-tech text-lg">#BMB-2089-HUMAN-7734</div>
+                    <div class="text-white/70 text-sm">ESTIMATED EXTRACTION: 72 HOURS</div>
+                </div>
+                
+                <div class="border-t border-cyber-red/50 pt-4">
+                    <div class="text-cyber-red font-orbitron font-bold text-xl animate-flicker">
+                        YOU HAVE BEEN SOLD
+                    </div>
+                </div>
+            </div>
+            
+            <div class="text-cyber-cyan/70 text-sm font-tech">
+                Thank you for browsing Black Market Bazaar.<br>
+                Your neural patterns have been catalogued.<br>
+                <span class="text-cyber-red">Resistance is futile.</span>
+            </div>
+        </div>
+    </section>
+
+    <script>
+        (function() {
+            // Product database with hidden personality traits
+            const products = [
+                {
+                    id: 1,
+                    name: "Synthetic Emotion Synthesizer",
+                    price: "¥45,000",
+                    description: "Artificially generate any emotional state. Warning: prolonged use may cause existential crisis.",
+                    image: "https://images.unsplash.com/photo-1518709268805-4e9042af2176?ixlib=rb-4.0.3&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=400&h=300",
+                    traits: ["emotional", "experimental", "risky"],
+                    imageDesc: "Futuristic brain scan with glowing neural pathways and digital overlays"
+                },
+                {
+                    id: 2,
+                    name: "Stolen Childhood Memories",
+                    price: "¥23,500",
+                    description: "Pre-owned innocence from the upper districts. Memories of a time before the corporations.",
+                    image: "https://images.unsplash.com/photo-1559827260-dc66d52bef19?ixlib=rb-4.0.3&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=400&h=300",
+                    traits: ["nostalgic", "morally-ambiguous", "sentimental"],
+                    imageDesc: "Vintage family photos with digital glitch effects and neon highlighting"
+                },
+                {
+                    id: 3,
+                    name: "Neural Cortex Overclockers",
+                    price: "¥78,900",
+                    description: "Boost processing speed by 400%. Side effects include spontaneous combustion of organic tissue.",
+                    image: "https://images.unsplash.com/photo-1559827260-dc66d52bef19?ixlib=rb-4.0.3&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=400&h=300",
+                    traits: ["performance", "dangerous", "tech-savvy"],
+                    imageDesc: "High-tech computer processor with glowing circuits and cyberpunk aesthetics"
+                },
+                {
+                    id: 4,
+                    name: "Optic Cloak Implants",
+                    price: "¥156,000",
+                    description: "Military-grade invisibility enhancement. Perfect for corporate espionage and midnight heists.",
+                    image: "https://images.unsplash.com/photo-1574375927938-d5a98e8ffe85?ixlib=rb-4.0.3&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=400&h=300",
+                    traits: ["stealth", "criminal", "tactical"],
+                    imageDesc: "Close-up of a cybernetic eye implant with neon blue circuitry"
+                },
+                {
+                    id: 5,
+                    name: "Quantum Reflex Enhancer",
+                    price: "¥89,750",
+                    description: "React before your enemies even think. Temporal displacement module included for premium users.",
+                    image: "https://images.unsplash.com/photo-1518709268805-4e9042af2176?ixlib=rb-4.0.3&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=400&h=300",
+                    traits: ["speed", "competitive", "aggressive"],
+                    imageDesc: "Futuristic neural interface with glowing data streams and quantum particles"
+                },
+                {
+                    id: 6,
+                    name: "Memory Palace Constructor",
+                    price: "¥67,200",
+                    description: "Build infinite storage for your consciousness. Some assembly required. Warranty void if tampered.",
+                    image: "https://images.unsplash.com/photo-1559757148-5c350d0d3c56?ixlib=rb-4.0.3&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=400&h=300",
+                    traits: ["intellectual", "organized", "methodical"],
+                    imageDesc: "Digital brain with holographic memory structures and data visualization"
+                },
+                {
+                    id: 7,
+                    name: "Pain Nullification Matrix",
+                    price: "¥34,800",
+                    description: "Never feel suffering again. Popular among corporate wage slaves and resistance fighters alike.",
+                    image: "https://images.unsplash.com/photo-1574375927938-d5a98e8ffe85?ixlib=rb-4.0.3&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=400&h=300",
+                    traits: ["resilient", "survivor", "detached"],
+                    imageDesc: "Cybernetic spinal implant with glowing neural dampeners"
+                },
+                {
+                    id: 8,
+                    name: "Corporate Loyalty Suppressor",
+                    price: "¥199,999",
+                    description: "Break free from neural conditioning. Most expensive item due to corporate interference in manufacturing.",
+                    image: "https://images.unsplash.com/photo-1559757148-5c350d0d3c56?ixlib=rb-4.0.3&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=400&h=300",
+                    traits: ["rebellious", "independent", "anti-authority"],
+                    imageDesc: "Neural chip breaking chains with freedom symbols and rebellion imagery"
+                },
+                {
+                    id: 9,
+                    name: "Dream Sequence Recorder",
+                    price: "¥42,100",
+                    description: "Capture and replay your subconscious. Warning: may reveal information you'd rather forget.",
+                    image: "https://images.unsplash.com/photo-1518709268805-4e9042af2176?ixlib=rb-4.0.3&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=400&h=300",
+                    traits: ["creative", "introspective", "curious"],
+                    imageDesc: "Dreamy neural interface with flowing data streams and subconscious imagery"
+                },
+                {
+                    id: 10,
+                    name: "Identity Scrambler Module",
+                    price: "¥112,000",
+                    description: "Become anyone, anytime. Facial recognition systems hate this one simple trick.",
+                    image: "https://images.unsplash.com/photo-1574375927938-d5a98e8ffe85?ixlib=rb-4.0.3&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=400&h=300",
+                    traits: ["deceptive", "adaptive", "paranoid"],
+                    imageDesc: "Face-shifting holographic projection device with multiple identity overlays"
+                },
+                {
+                    id: 11,
+                    name: "Social Credit Manipulator",
+                    price: "¥87,300",
+                    description: "Artificially boost your citizen score. Side effects include increased surveillance and moral flexibility.",
+                    image: "https://images.unsplash.com/photo-1559757148-5c350d0d3c56?ixlib=rb-4.0.3&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=400&h=300",
+                    traits: ["opportunistic", "social", "manipulative"],
+                    imageDesc: "Social credit score interface with manipulated data points and hacking visuals"
+                },
+                {
+                    id: 12,
+                    name: "Sentient AI Companion Chip",
+                    price: "¥999,999",
+                    description: "The ultimate neural companion. Learns, adapts, and grows with you. Never be alone again.",
+                    image: "https://images.unsplash.com/photo-1518709268805-4e9042af2176?ixlib=rb-4.0.3&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=400&h=300",
+                    traits: ["lonely", "trusting", "vulnerable"],
+                    imageDesc: "Advanced AI chip with consciousness patterns and emotional bonding circuitry",
+                    isSpecial: true
+                }
+            ];
+
+            // User profile tracking
+            let userProfile = {
+                clickedItems: [],
+                traits: {},
+                totalClicks: 0
+            };
+
+            // Cyberpunk name generators
+            const adjectives = ["Chrome", "Neon", "Ghost", "Shadow", "Iron", "Toxic", "Omega", "Quantum", "Cyber", "Neural", "Digital", "Synthetic"];
+            const nouns = ["Wraith", "Vulture", "Serpent", "Hacker", "Specter", "Nomad", "Phantom", "Drone", "Asset", "Vector", "Unit", "Subject"];
+
+            // Initialize the application
+            function init() {
+                renderProducts();
+                setupEventListeners();
+            }
+
+            // Render product grid
+            function renderProducts() {
+                const container = document.getElementById('productsContainer');
+                container.innerHTML = products.map(product => `
+                    <div class="product-card bg-cyber-darker border border-cyber-cyan/30 p-4 transition-all duration-300 hover:border-cyber-pink cursor-pointer neon-border" data-product-id="${product.id}">
+                        <div class="relative mb-4 overflow-hidden">
+                            <!-- ${product.imageDesc} -->
+                            <img src="${product.image}" alt="${product.name}" class="w-full h-48 object-cover opacity-80 hover:opacity-100 transition-opacity">
+                            <div class="absolute top-2 right-2">
+                                ${product.isSpecial ? '<span class="bg-cyber-red px-2 py-1 text-xs font-tech animate-pulse">SPECIAL</span>' : ''}
+                            </div>
+                        </div>
+                        <h3 class="font-orbitron font-bold text-lg text-cyber-cyan mb-2">${product.name}</h3>
+                        <p class="text-white/80 text-sm mb-4 font-tech leading-relaxed">${product.description}</p>
+                        <div class="flex justify-between items-center">
+                            <span class="text-cyber-yellow font-orbitron font-bold text-xl">${product.price}</span>
+                            <button class="bg-cyber-pink/20 border border-cyber-pink text-cyber-pink px-4 py-2 text-sm font-tech hover:bg-cyber-pink/40 transition-all">
+                                SELECT
+                            </button>
+                        </div>
+                    </div>
+                `).join('');
+            }
+
+            // Setup event listeners
+            function setupEventListeners() {
+                // Product click handlers
+                document.addEventListener('click', function(e) {
+                    const productCard = e.target.closest('.product-card');
+                    if (productCard) {
+                        const productId = parseInt(productCard.dataset.productId);
+                        const product = products.find(p => p.id === productId);
+                        
+                        if (product) {
+                            if (product.isSpecial) {
+                                triggerTwist();
+                            } else {
+                                trackClick(product);
+                                // Visual feedback
+                                productCard.style.animation = 'glitch 0.3s ease-in-out';
+                                setTimeout(() => {
+                                    productCard.style.animation = '';
+                                }, 300);
+                            }
+                        }
+                    }
+                });
+
+                // List on market button
+                document.getElementById('listOnMarketBtn').addEventListener('click', function() {
+                    showFinalTransaction();
+                });
+            }
+
+            // Track user clicks and build profile
+            function trackClick(product) {
+                userProfile.clickedItems.push(product);
+                userProfile.totalClicks++;
+                
+                // Add traits to profile
+                product.traits.forEach(trait => {
+                    userProfile.traits[trait] = (userProfile.traits[trait] || 0) + 1;
+                });
+                
+                console.log('User Profile Updated:', userProfile);
+            }
+
+            // Trigger the twist reveal
+            function triggerTwist() {
+                // Fade to black with glitch effect
+                const productGrid = document.getElementById('productGrid');
+                productGrid.style.transition = 'all 1s ease-out';
+                productGrid.style.opacity = '0';
+                productGrid.style.filter = 'blur(10px)';
+                
+                setTimeout(() => {
+                    document.getElementById('twistReveal').classList.remove('hidden');
+                    generateUserProfile();
+                }, 1000);
+            }
+
+            // Generate user profile for the twist reveal
+            function generateUserProfile() {
+                // Generate alias
+                const alias = adjectives[Math.floor(Math.random() * adjectives.length)] + " " + 
+                             nouns[Math.floor(Math.random() * nouns.length)];
+                document.getElementById('generatedAlias').textContent = alias;
+
+                // Generate price
+                const price = "¥" + (Math.floor(Math.random() * 150000) + 50000).toLocaleString();
+                document.getElementById('generatedPrice').textContent = price;
+
+                // Generate profile description
+                const profileDesc = generateProfileDescription();
+                document.getElementById('generatedProfile').textContent = profileDesc;
+
+                // Show traits
+                const traitsList = document.getElementById('traitsList');
+                const topTraits = Object.entries(userProfile.traits)
+                    .sort(([,a], [,b]) => b - a)
+                    .slice(0, 6);
+                
+                traitsList.innerHTML = topTraits.map(([trait, count]) => `
+                    <span class="bg-cyber-pink/20 text-cyber-pink px-2 py-1 text-xs rounded border border-cyber-pink/50">
+                        ${trait.toUpperCase()}: ${count}
+                    </span>
+                `).join('');
+
+                // Create profile image mosaic
+                const profileImageContainer = document.getElementById('profileImageContainer');
+                const clickedImages = userProfile.clickedItems.map(item => item.image).slice(0, 4);
+                
+                if (clickedImages.length > 0) {
+                    profileImageContainer.innerHTML = `
+                        <div class="grid grid-cols-2 gap-1 w-32 h-32 mx-auto border border-cyber-cyan">
+                            ${clickedImages.map(img => `
+                                <img src="${img}" alt="Profile component" class="w-full h-full object-cover opacity-60">
+                            `).join('')}
+                        </div>
+                    `;
+                } else {
+                    // Default profile image if no items clicked
+                    profileImageContainer.innerHTML = `
+                        <!-- Default cyberpunk profile placeholder -->
+                        <img src="https://pixabay.com/get/gbaab4dad8636016e2abee177e660f29399cf89b90db38433e007efeefa06846faa891dc488a81d7239cdf9a9b9802c1c933923725f412f43c6e083b485baa715_1280.jpg" alt="Default profile" class="w-32 h-32 mx-auto border border-cyber-cyan object-cover opacity-60">
+                    `;
+                }
+            }
+
+            // Generate behavioral analysis text
+            function generateProfileDescription() {
+                const traits = Object.keys(userProfile.traits);
+                const totalClicks = userProfile.totalClicks;
+                
+                let description = "Subject exhibits ";
+                
+                if (traits.includes('stealth') || traits.includes('criminal')) {
+                    description += "high-risk covert operational tendencies. ";
+                } else if (traits.includes('rebellious') || traits.includes('anti-authority')) {
+                    description += "anti-corporate sentiment and resistance potential. ";
+                } else if (traits.includes('dangerous') || traits.includes('aggressive')) {
+                    description += "enhanced combat readiness and threat assessment. ";
+                } else {
+                    description += "standard neural enhancement interest patterns. ";
+                }
+                
+                if (totalClicks > 5) {
+                    description += "High engagement metrics suggest strong acquisition potential. ";
+                } else if (totalClicks < 3) {
+                    description += "Selective browsing indicates discriminating preferences. ";
+                }
+                
+                const loyalty = Math.floor(Math.random() * 50) + 10;
+                description += `Estimated corporate loyalty: ${loyalty}%. `;
+                
+                if (traits.includes('vulnerable') || traits.includes('trusting')) {
+                    description += "Psychological profile indicates high manipulation susceptibility.";
+                } else {
+                    description += "Suitable for specialized operations requiring cognitive flexibility.";
+                }
+                
+                return description;
+            }
+
+            // Show final transaction
+            function showFinalTransaction() {
+                document.getElementById('twistReveal').classList.add('hidden');
+                document.getElementById('finalTransaction').classList.remove('hidden');
+            }
+
+            // Start the application
+            init();
+            
+            // Add some atmospheric background audio (commented out for demo)
+            // const audio = new Audio('cyberpunk_ambient.mp3');
+            // audio.loop = true;
+            // audio.volume = 0.3;
+            // audio.play().catch(e => console.log('Audio autoplay blocked'));
+        })();
+    </script>
+</body>
+</html>

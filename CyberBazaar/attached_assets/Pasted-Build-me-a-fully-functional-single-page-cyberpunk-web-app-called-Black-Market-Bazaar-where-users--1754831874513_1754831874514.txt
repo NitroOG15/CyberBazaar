@@ -1,0 +1,71 @@
+Build me a fully functional, single-page cyberpunk web app called "Black Market Bazaar" where users browse an underground marketplace of illegal futuristic goods. The entire experience should be atmospheric, immersive, and include a plot twist reveal.
+
+GOAL & STORY:
+
+At first, the user thinks they are shopping for illegal cyberware items.
+Behind the scenes, the site tracks which items they click on and uses that to build a "profile" about them.
+The twist: When they click on a final special item, the app reveals that THEY are actually the product being sold.
+REQUIREMENTS:
+
+DESIGN / THEME
+Cyberpunk, neon-glitch aesthetic (deep blacks, neon blues/pinks/purples, glitch effects).
+Use a grid of product cards with hover animations, flickering/glitch text.
+Background: dark, animated with subtle glitch lines or pixel noise.
+Fonts: futuristic and glitchy (Orbitron, Share Tech Mono, or similar from Google Fonts).
+Include a looping cyberpunk background soundtrack (optional, can use HTML5 audio with an mp3 link).
+Responsive design for desktop & mobile.
+PRODUCT LIST
+Display 8-12 fake cyberware items with name, fake price, image, and short dystopian description.
+Example items:
+"Synthetic Emotion Synthesizer"
+"Stolen Childhood Memories"
+"Neural Cortex Overclockers"
+"Optic Cloak Implants"
+"Quantum Reflex Enhancer"
+"Sentient AI Companion Chip" ← SPECIAL trigger item
+Each product should have:
+Title
+Fake price (in ¥ credits)
+Image (can use free cyberpunk product images or AI-generated placeholders)
+Short dark description (20-30 words)
+Hidden tags for traits/personality (example: stealth, rebellion, curiosity, danger).
+INTERACTIVITY & PROFILE TRACKING
+Every time the user clicks a product, store:
+Product name
+Hidden personality tags (defined in code)
+Store clicks in an in-memory array (no need for database).
+Each product contributes to a hidden "profile" object about the user.
+Example: Clicking "Optic Cloak Implants" adds "stealthy" to their traits; "Stolen Memories" adds "morally ambiguous."
+THE TWIST
+If the user clicks the special "Sentient AI Companion Chip" product:
+Fade screen to black with glitch transition.
+Replace product grid with a single "Final Listing" card.
+FINAL LISTING PAGE CONTENT:
+Image: Mosaic/collage made from thumbnails of the products they clicked earlier.
+Title: Generated cyberpunk alias → create from a list of adjectives + nouns, example:
+Adjectives: Chrome, Neon, Ghost, Shadow, Iron, Toxic, Omega, Quantum
+Nouns: Wraith, Vulture, Serpent, Hacker, Specter, Nomad, Phantom
+Randomly combine one adjective + one noun.
+Description: Auto-generate text from their browsing behavior, e.g.: "Subject shows interest in stealth optics and memory modification. High-risk tolerance detected. Suitable for corporate espionage. Estimated loyalty: 23%."
+Price: Random dystopian currency value (¥80,000, 45,000 credits, etc.).
+Button: Instead of “Buy Now,” show “LIST ON MARKET.”
+Clicking “LIST ON MARKET” should show:
+Fake buyer profile (name, avatar, buyer rating).
+Fake "shipment tracking" number.
+Creepy closing message: “You have been sold.”
+TECH NOTES
+Use HTML, CSS, and JavaScript (React preferred but not required).
+Use TailwindCSS for styling with custom colors for neon effects.
+Add CSS glitch effects for hover states and transitions.
+No backend is required; all data can be simulated on the frontend.
+If images are needed, use free placeholder images or AI-generated ones with a cyberpunk style.
+DEPLOYMENT
+Code should be exportable to deploy on Firebase Hosting.
+All assets (images, audio, CSS) should be included in the project.
+Keep code readable and modular so it’s easy to tweak for the hackathon.
+EXTRA POLISH (if time allows):
+
+Add subtle ambient particle effects in the background.
+Animate product cards slightly when hovered.
+Include easter eggs: If the user clicks only "dangerous" items, give them a special “high threat” profile.
+Make the "LIST ON MARKET" button pulse or glitch for effect.
